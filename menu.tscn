@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyw06n685pwe"]
+
+[ext_resource type="FontFile" uid="uid://c8u54wfd2cevn" path="res://bit5x5.ttf" id="1_lqoiq"]
+[ext_resource type="Script" path="res://menu.gd" id="1_qdl1l"]
+
+[node name="Menu" type="Node2D"]
+script = ExtResource("1_qdl1l")
+metadata/_edit_vertical_guides_ = [300.0]
+metadata/_edit_horizontal_guides_ = [300.0, 340.0]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 599.0
+offset_bottom = 599.0
+color = Color(0, 0, 0, 1)
+
+[node name="Pongo" type="Label" parent="."]
+offset_left = 188.0
+offset_top = 251.0
+offset_right = 413.0
+offset_bottom = 297.0
+theme_override_fonts/font = ExtResource("1_lqoiq")
+theme_override_font_sizes/font_size = 60
+text = "pongo"
+
+[node name="oneplayer" type="Button" parent="."]
+offset_left = 187.0
+offset_top = 301.0
+offset_right = 415.0
+offset_bottom = 339.0
+theme_override_fonts/font = ExtResource("1_lqoiq")
+theme_override_font_sizes/font_size = 40
+text = "1 player"
+
+[node name="twoplayer" type="Button" parent="."]
+offset_left = 171.0
+offset_top = 344.0
+offset_right = 429.0
+offset_bottom = 382.0
+theme_override_fonts/font = ExtResource("1_lqoiq")
+theme_override_font_sizes/font_size = 40
+text = "2 players"
+
+[connection signal="pressed" from="oneplayer" to="." method="_on_oneplayer_pressed"]
+[connection signal="pressed" from="twoplayer" to="." method="_on_twoplayer_pressed"]

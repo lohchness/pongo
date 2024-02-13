@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://csve6dayd2nfn"]
+
+[ext_resource type="Script" path="res://paddle.gd" id="1_6qnne"]
+[ext_resource type="Texture2D" uid="uid://dkaqx141mfj4v" path="res://paddle.png" id="2_t8e32"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1o5j2"]
+size = Vector2(14, 114)
+
+[node name="paddle" type="StaticBody2D"]
+position = Vector2(28, 354)
+script = ExtResource("1_6qnne")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1, 0.75)
+texture = ExtResource("2_t8e32")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1, 0.75)
+shape = SubResource("RectangleShape2D_1o5j2")
+
+[node name="Timers" type="Node2D" parent="."]
+
+[node name="SizeUp" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="SpeedUp" type="Timer" parent="Timers"]
+one_shot = true
+
+[connection signal="timeout" from="Timers/SizeUp" to="." method="_on_size_up_timeout"]
+[connection signal="timeout" from="Timers/SpeedUp" to="." method="_on_speed_up_timeout"]

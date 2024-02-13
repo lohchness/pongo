@@ -1,0 +1,151 @@
+[gd_scene load_steps=9 format=3 uid="uid://cjbqrs83shr2n"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_g5eyr"]
+[ext_resource type="PackedScene" uid="uid://dm5tfhq8q8ktx" path="res://wall.tscn" id="1_rnsg2"]
+[ext_resource type="PackedScene" uid="uid://csve6dayd2nfn" path="res://paddle.tscn" id="2_7gyyv"]
+[ext_resource type="PackedScene" uid="uid://beesh3bc8yxtt" path="res://ball.tscn" id="3_mv1w5"]
+[ext_resource type="PackedScene" uid="uid://c2favwcd7o2jo" path="res://edge.tscn" id="5_wgm4c"]
+[ext_resource type="FontFile" uid="uid://c8u54wfd2cevn" path="res://bit5x5.ttf" id="6_8q2yl"]
+[ext_resource type="PackedScene" uid="uid://be3qsm53eg2xe" path="res://size_up.tscn" id="7_jjhfy"]
+[ext_resource type="PackedScene" uid="uid://dtl6faiolf18f" path="res://speed_up.tscn" id="8_uk4j4"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_g5eyr")
+size_ups = ExtResource("7_jjhfy")
+speed_ups = ExtResource("8_uk4j4")
+metadata/_edit_vertical_guides_ = [-1.0, 600.0, 300.0, 150.0, 450.0]
+metadata/_edit_horizontal_guides_ = [600.0, 60.0]
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Walls"]
+modulate = Color(0, 0, 0, 1)
+visibility_layer = 512
+offset_right = 599.0
+offset_bottom = 600.0
+
+[node name="TopWall" parent="Walls" instance=ExtResource("1_rnsg2")]
+
+[node name="BotWall" parent="Walls" instance=ExtResource("1_rnsg2")]
+position = Vector2(0, 580)
+
+[node name="Paddles" type="Node2D" parent="."]
+
+[node name="P1_paddle" type="Node2D" parent="Paddles"]
+
+[node name="Player1" parent="Paddles/P1_paddle" instance=ExtResource("2_7gyyv")]
+modulate = Color(0.905882, 0, 0.905882, 1)
+position = Vector2(20, 300)
+player_number = 1
+
+[node name="P2_paddle" type="Node2D" parent="Paddles"]
+
+[node name="Player2" parent="Paddles/P2_paddle" instance=ExtResource("2_7gyyv")]
+modulate = Color(0, 0.937255, 0.937255, 1)
+position = Vector2(580, 300)
+player_number = 3
+
+[node name="Ball" type="Node2D" parent="."]
+
+[node name="ball" parent="Ball" instance=ExtResource("3_mv1w5")]
+position = Vector2(300, 300)
+
+[node name="Goals" type="Node2D" parent="."]
+
+[node name="Edge1" parent="Goals" instance=ExtResource("5_wgm4c")]
+position = Vector2(-7, 299)
+scale = Vector2(-1.4, 30)
+
+[node name="Edge2" parent="Goals" instance=ExtResource("5_wgm4c")]
+position = Vector2(607, 300)
+
+[node name="UI" type="Node2D" parent="."]
+
+[node name="RoundStartTimer" type="Timer" parent="UI"]
+wait_time = 0.6
+autostart = true
+
+[node name="RoundStartCountdown" type="Label" parent="UI"]
+offset_left = 280.0
+offset_top = 281.0
+offset_right = 320.0
+offset_bottom = 320.0
+theme_override_fonts/font = ExtResource("6_8q2yl")
+theme_override_font_sizes/font_size = 51
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Winner" type="Label" parent="UI"]
+offset_left = 280.0
+offset_top = 239.0
+offset_right = 320.0
+offset_bottom = 362.0
+theme_override_fonts/font = ExtResource("6_8q2yl")
+theme_override_font_sizes/font_size = 51
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Player1_Score" type="Label" parent="UI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 134.0
+offset_top = 44.0
+offset_right = 172.0
+offset_bottom = 83.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_8q2yl")
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Player2_Score" type="Label" parent="UI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 434.0
+offset_top = 44.0
+offset_right = 472.0
+offset_bottom = 83.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_8q2yl")
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Restart" type="Label" parent="UI"]
+visible = false
+offset_left = 180.0
+offset_top = 365.0
+offset_right = 420.0
+offset_bottom = 388.0
+theme_override_fonts/font = ExtResource("6_8q2yl")
+text = "press space to restart"
+
+[node name="RestartTimer" type="Timer" parent="UI"]
+wait_time = 0.5
+
+[node name="BuffTimers" type="Node2D" parent="."]
+
+[node name="SizeUpTimer" type="Timer" parent="BuffTimers"]
+wait_time = 10.0
+autostart = true
+
+[node name="SpeedUpTimer" type="Timer" parent="BuffTimers"]
+wait_time = 10.0
+autostart = true
+
+[connection signal="point_scored" from="Goals/Edge1" to="." method="_on_p2_score"]
+[connection signal="point_scored" from="Goals/Edge2" to="." method="_on_p1_score"]
+[connection signal="timeout" from="UI/RoundStartTimer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="UI/RestartTimer" to="." method="_on_restart_timer_timeout"]
+[connection signal="timeout" from="BuffTimers/SizeUpTimer" to="." method="_on_size_up_timer_timeout"]
+[connection signal="timeout" from="BuffTimers/SpeedUpTimer" to="." method="_on_speed_up_timer_timeout"]
