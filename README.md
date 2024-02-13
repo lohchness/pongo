@@ -1,5 +1,9 @@
 # pongo
-Pong with powerups made with Godot banged together in a few days as a quick Godot intro
+Pong with powerups made with Godot banged together in a few days as a quick intro to Godot
+
+Me playing against the computer (it can be beaten, if the ball is fast enough), and you can play with another local opponent:
+
+https://github.com/lohchness/lohchness.github.io/assets/50405970/9c1a5d4e-1bdb-4265-91f5-d6621a29044d
 
 # v5
 
